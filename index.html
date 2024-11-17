@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>French-Hungarian Flashcards</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        #prompt {
+            font-size: 24px;
+            margin: 20px;
+        }
+        #answer {
+            font-size: 20px;
+            margin: 10px;
+            width: 300px;
+        }
+        #skipButton {
+            font-size: 16px;
+            margin: 5px;
+        }
+        #statistics {
+            margin-top: 20px;
+        }
+        #timer {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="prompt"></div>
+    <input type="text" id="answer" placeholder="Type the French word or phrase">
+    <div>
+        <button id="skipButton">Skip</button>
+    </div>
+    <div id="feedback"></div>
+    <div id="timer"></div>
+    <div id="statistics">
+        <p>Correct: <span id="correctCount">0</span></p>
+        <p>Incorrect: <span id="incorrectCount">0</span></p>
+        <p>Total: <span id="totalCount">0</span></p>
+        <p>Accuracy: <span id="accuracy">0%</span></p>
+    </div>
+    <script>
+        const words = `à cause de ~ miatt;à côté de ~ mellett;à l’étranger ~ külföldön;à l’heure ~ időben;à vrai dire ~ valójában;accident (m) ~ baleset;acheter ~ venni;actuellement ~ jelenleg;admirer ~ csodálni;adorer ~ imádni;affaire (f) ~ ügy;affreux, -euse ~ borzalmas;âge (m) ~ kor;agenda (m) ~ naptár;aider qn ~ segiteni valakinek;aimer ~ szeretni;ainsi ~ igy;aliment (m) ~ élelmiszer;aller ~ menni;alors ~ akkor;ambiance (f) ~ hangulat;amical, -e ~ barátságos;amour (m) ~ szeretet, szerelem;amoureux, -euse ~ szerelmes;an (m) ~ év;appétit (m) ~ étvágy;après-demain ~ holnapután;après-midi ~ délután;argent (m) ~ pénz;arrêter ~ abbahagyni;arriver ~ megérkezni;assez ~ elég;attendre ~ várni;aujourd’hui ~ ma;aussi ~ is, szintén;auteur, -e ~ szerző, iró;automne (m) ~ ősz;autre ~ más;avant-hier ~ tegnapelőtt;adventure (f) ~ kaland;avoir ~ birtokolni;avoir besoin de qch ~ szüksége van valamire;avoir l’impression ~ az a benyomása;avoir le courage de ~ van bátorsága hozzá;avoir peur de ~ félni valamitől;avoir raison ~ igaza van;avril (m) ~ április;bavarder ~ beszélgetni;beau, belle ~ szép;bien ~ jól;bien sûr ~ természetesen;bientôt ~  hamarosan;bilingue ~ kétnyelvű;bizarre ~ furcsa;blague (f) ~ vicc;blanc, -che ~ fehér;bleu, -e ~ kék;blond, -e ~ szőke;bœuf (m) ~ marha (hús);boire ~ inni;bonbon (m) ~ bonbon cukor;bonheur (m) ~ boldogság;bonjour ~ jó napot;bonne nuit ~ jó éjszakát;bouteille (f) ~ üveg;boutique (f) ~ üzlet;bref ~ röviden, szólva;briller ~ csillogni;brun, -e ~ barna;ça ~ az;ça va ~ minden rendben, jól van;cacher ~ elrejteni, eltitkolni;cadeau (m) ~ ajándék;café (m) ~ kávé, kávézó;cage (f) ~ kalitka, ketrec;cahier (m) ~ füzet;calme ~ nyugodt;caméra (f) ~ kamera;candidat, -e ~ versenyző;capitale (f) ~ főváros;carte (f) ~ térkép, cártya;catastrophe (f) ~ katasztrófa;causer ~ okozni;ce soir ~ ma este;célibataire ~ egyedülálló;centre (m) ~ központ;certainement ~ bizonyára;chance (f) ~ szerencse;chanson (f) ~ ének, dal;chanter ~ énekelni;château (m) ~ kastély;chaud, -e ~ meleg;chemise (f) ~ ing;cheveux (m) ~ haj;chez ~  -nál, -nél, -hoz, -höz;chic ~ elegáns;chien (m) ~ kutya;chocolat (m) ~ csokoládé;chocolat chaud ~ forró csoki;choisir ~ választani;chouette ~ klassz;clé (f) ~ kulcs ;climat (m) ~ éghajlat;cœur (m) ~ sziv;commander ~ rendelni;commencer ~ kezdeni;comment ~ hogyan;compétition (f) ~ versengés;complétement ~ egészen, teljesen;compliqué, -e ~ bonyolult;comprendre ~ érteni;concours (m) ~ verseny;confiance (f) ~ bizalom;conflit (m) ~ konfliktus;connaître ~ ismerni;conséquence (f) ~ következmény;content, -e ~ elégedett, örül;continuer ~ folytatni;contrat (m) ~ szerződés;contre ~ ellen;copain (m) ~ barát;copier ~ másolni;copine (f) ~ barátnő;coucou ~ hahó, szia;courage (m) ~ bátorság;cours (m) ~ tanóra;court, -e ~ rövid;cousin (m) ~ unokafivér;cousine (f) ~ unokanővér/húg;crayon (m) ~ ceruza;crevé, -e ~ hullafáradt;crise (f) ~  válság, krizis;critiquer ~ kritizálni, megbirálni;croire ~ hinni;curieux, -euse ~ kiváncsi;d’autre part ~ másrészt;d’une part ~ egyrészt;d’abord ~ először is;d’accord ~ rendben;dalmatien (m) ~ dalmata;dangereux, -euse ~ veszélyes;danse (f) ~ tánc;danser ~ táncolni;décider ~elhatározni;découvrir ~ felfedezni;défendre ~ megvédeni;déjeuner ~ ebéd;délicat, -e ~ kényes;délicieux, -euse ~ finom;demain ~ holnap;depuis ~ óta;déranger ~ zavarni;dernier, -ére ~ utolsó, utóbbi;derrière ~ mögött;descendre ~ lemenni;dessert (m) ~ desszert;dessin (m) ~ rajz;détester ~ utálni;devant ~ előtt;devoir(m) ~ házi feladat;devoir ~ kell;différent, -e ~ különböző, más;difficile~ nehéz;difficelent ~ nehezen;dimanche (m) ~ vasárnap;dîner (m) ~ vacsora;dire ~ mondani;directeur, -trice ~ igazgató;discuter ~ beszélgetni;donc ~ tehát;donner ~ adni;dormir ~ aludni;doué, -e ~ tehetséges;doute (m) ~ kétség;drôle ~ vicces;dur, -e ~ kemény, nehéz (időben);durer ~  tartani (időben);eau (f) ~ víz;école (f) ~ iskola;école maternelle (f) ~ óvoda;école primaire (f) ~ iskola alsó tagozata;écouter ~ hallgatni;écran (m) ~ képernyő;écrire ~ írni;embrasser ~ megölel, megcsókol;émission (f) ~ adás, műsor;en réalité ~ valójában;en retard~ késésben;encore ~ még;encourager ~ bátoritani valakit;enfin ~ végül, végre;énorme ~ hatalmas;ensemble ~ együtt;entendre ~ hallani;entier, -ére ~ egész;entre ~ között;entrer ~ bemenni;envoyer ~ elküldeni;épouser ~ elvenni vkit;espérer ~ remélni;essayer ~ megpróbálni;état (m) ~ állapot;été (m) ~ nyár;être ~ lenni;être d’accord avec qn ~ egyetért valakivel;étudier ~  tanulmányokat folytatni;évident, -e ~ egyértelmű, evidens;exactement ~ pontosan;excellent, -e ~ kitűnő;exceptionnel, -le ~ kivételes;excursion (f) ~ kirándulás;expliquer ~ megmagyarázni;extraordinaire ~ rendkívüli;fâché, -e ~ mérges;facile ~ könnyű;faim (f) ~ éhség;faire ~ csinálni, tenni;faire attention~ figyelni;faire dodo ~ alukálni;faire la connaissance ~ megismerkedni;faire la cuisine ~ főzni;faire le ménage ~ takaritani;faire pipi ~ pisilni;faire ses valises ~ becsomagolni;famille (f) ~ család;fantastique ~ fantasztikus;fatigue (f) ~ fáradtság;fatigué, -e ~ fáradt;félicitations (f) ~ gratuláció;femme (f) ~ nő;fermé, -e ~ zárva;fête (f) ~ ünnep, parti, buli;février (m) - február;fier, fière ~ büszke;fille (f) ~ lány;film (m) ~ film;fils (m) ~ fia valakinek;finalement ~ végül is;finir ~ befejez;fois (f) ~ alkalom, szor, -szor;formidable ~ csodálatos;fort, -e ~ erős;fragile ~ törékeny;fréquenter ~ járni valahova;frère (m) ~ fiútestvér;frigidaire (m) ~ frizsider;froid, -e ~ hideg;fromage (m) ~ sajt;fruit (m) ~ gyümölcs;gagner ~ nyerni;garage (m) ~ garázs;garçon (m) ~ fiú;génial, -e ~ zseniális;gens ~ emberek;gentil, -ille ~ kedves;goûter ~ megkostólni;grâce à ~ hála valaminek/valakinek;grand, -e ~ nagy;grandir ~ nőni;grand-père (m) ~ nagyapa;grand-mère (f) ~ nagyanya;gras, -se ~ zsíros;grave ~ súlyos;grignoter ~ nassolni;groupe (m) ~ csoport;habitant, -e ~ lakos;habiter ~ lakni;handicapé, -e ~ mozgássérült;heure (f) ~ óra;heureusement ~ szerencsére;hier ~ tegnap;histoire (f) ~ történet, történelem;hiver (m) ~ tél;homme (m) ~ férfi, ember;hôpital (m) ~ kórház;horrible ~ borzalmas;hôtel (m) ~ szálloda;hypermarché(m) ~ hipermarket;ici ~ itt;icône (m) ~ ikon;idiot, -e ~ ostoba, hülye;il fait beau~ szép idő van;il fait chaud ~ meleg van;il fait froid ~ hideg van;il fait mauvais ~ rossz idő van;il faut ~ kell;il neige (neiger) ~ havazik;il pleut (pleuvoir) ~ esik az eső;il suffit de ~ elegendő;il y a ~ van;il y a du soleil ~ süt a nap;imaginer ~ elképzelni;immédiatement ~ rögtön;incroyable ~ hihetetlen;infos ~ hírek;interdire ~ megtiltani;intéressant ~ érdekes;inviter ~ meghívni`.split(';').filter(Boolean);
+
+        let correctCount = 0;
+        let incorrectCount = 0;
+        let totalCount = 0;
+        let currentPrompt;
+        let startTime;
+        let timerInterval;
+
+        function getRandomWord() {
+            const randomIndex = Math.floor(Math.random() * words.length);
+            return words[randomIndex];
+        }
+
+        function displayPrompt() {
+            const wordPair = getRandomWord().split(" ~ ");
+            currentPrompt = wordPair;
+            document.getElementById("prompt").textContent = `Hungarian: ${wordPair[1]}`;
+            document.getElementById("answer").value = "";
+            document.getElementById("answer").disabled = false;
+            document.getElementById("feedback").textContent = "";
+            document.getElementById("skipButton").style.display = "inline";
+            document.getElementById("timer").style.display = "block";
+            startTime = new Date();
+            clearInterval(timerInterval);
+            timerInterval = setInterval(updateTimer, 1000);
+        }
+
+        function updateTimer() {
+            const now = new Date();
+            const elapsedSeconds = Math.floor((now - startTime) / 1000);
+            document.getElementById("timer").textContent = `Time elapsed: ${elapsedSeconds} seconds`;
+        }
+
+        document.getElementById("answer").addEventListener("input", function () {
+            const userAnswer = document.getElementById("answer").value.trim();
+            if (userAnswer === currentPrompt[0]) {
+                document.getElementById("feedback").textContent = "Correct. Good Job!";
+                correctCount++;
+                document.getElementById("skipButton").style.display = "none";
+                document.getElementById("answer").disabled = true;
+                document.getElementById("timer").style.display = "none";
+                clearInterval(timerInterval);
+                setTimeout(clearUI, 3000);
+                totalCount++;
+                updateStatistics();
+            }
+        });
+
+        document.getElementById("skipButton").addEventListener("click", function () {
+            document.getElementById("feedback").textContent = `The correct answer is: ${currentPrompt[0]}`;
+            document.getElementById("skipButton").style.display = "none";
+            document.getElementById("answer").disabled = true;
+            document.getElementById("timer").style.display = "none";
+            setTimeout(clearUI, 5000);
+            totalCount++;
+            incorrectCount++;
+            updateStatistics();
+        });
+
+        function clearUI() {
+            document.getElementById("feedback").textContent = "";
+            document.getElementById("prompt").textContent = "";
+            displayPrompt();
+        }
+
+        function updateStatistics() {
+            document.getElementById("correctCount").textContent = correctCount;
+            document.getElementById("incorrectCount").textContent = incorrectCount;
+            document.getElementById("totalCount").textContent = totalCount;
+            document.getElementById("accuracy").textContent = `${((correctCount / totalCount) * 100).toFixed(2)}%`;
+        }
+
+        displayPrompt();
+    </script>
+</body>
+</html>
