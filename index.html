@@ -86,8 +86,8 @@
         }
 
         document.getElementById("answer").addEventListener("input", function () {
-            const userAnswer = document.getElementById("answer").value.trim();
-            if (userAnswer === currentPrompt[0]) {
+            const userAnswer = document.getElementById("answer").value.trim().toLowerCase();
+            if (userAnswer === currentPrompt[0].toLowerCase()) {
                 document.getElementById("feedback").textContent = "correct. good job!";
                 correctCount++;
                 document.getElementById("skipButton").style.display = "none";
